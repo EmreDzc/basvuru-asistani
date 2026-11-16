@@ -53,29 +53,6 @@ public class ConsumerCase {
     }
 
 
-    // Eski constructor: Mevcut CaseService için geçici olarak duruyor
-    public ConsumerCase(Long id, String description,
-                        RequestedRemedy requestedRemedy) {
-
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("ID pozitif olmalı");
-        }
-
-        if (description == null || description.isBlank()) {
-            throw new IllegalArgumentException("Açıklama boş olamaz");
-        }
-
-        if (requestedRemedy == null) {
-            throw new IllegalArgumentException("İstenen çözüm boş olamaz");
-        }
-
-        this.id = id;
-        this.description = description;
-        this.requestedRemedy = requestedRemedy;
-        this.status = CaseStatus.DRAFT;
-    }
-
-
     // Yeni constructor: Gerçek proje için
     public ConsumerCase(Long userId,
                         String description,
@@ -192,5 +169,13 @@ public class ConsumerCase {
 
     public CaseStatus getStatus() {
         return status;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

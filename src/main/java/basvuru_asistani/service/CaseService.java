@@ -1,33 +1,33 @@
 package basvuru_asistani.service;
 
 import basvuru_asistani.domain.ConsumerCase;
+import basvuru_asistani.repository.ConsumerCaseRepository;
 import basvuru_asistani.request.CreateCaseRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class CaseService {
-    private final Map<Long, ConsumerCase> cases = new ConcurrentHashMap<>();
-    private final AtomicLong nextId = new AtomicLong(0);
 
-    public ConsumerCase createCase(CreateCaseRequest request) {
-        long id = nextId.incrementAndGet();
-        ConsumerCase newCase = new ConsumerCase(
-                id, request.getDescription(), request.getRequestedRemedy());
-        cases.put(id, newCase);
-        return newCase;
+    private static final Long DEMO_USER_ID = 1L;
+
+    private final ConsumerCaseRepository caseRepository;
+
+    public CaseService(ConsumerCaseRepository caseRepository) {
+        this.caseRepository = caseRepository;
     }
 
-    public List<ConsumerCase> getAllCases() {
-        return new ArrayList<>(cases.values());
+    public ConsumerCase createCase(CreateCaseRequest request){
+        ConsumerCase newCase  = new ConsumerCase(DEMO_USER_ID, request.getDescription(), request.getRequestedRemedy(),null);
+        return caseRepository.save(newCase);
     }
 
-    public ConsumerCase getCaseById(Long id) {
-        return cases.get(id);
+    public List<ConsumerCase> getAllCases(){
+        return caseRepository.findAll();
+    }
+
+    public ConsumerCase getCaseById(Long id){
+        return caseRepository.findById(id).orElse(null);
     }
 }
