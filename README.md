@@ -15,7 +15,7 @@ başvuru durumunu takip etmesini sağlayan REST API.
 | GET   | /api/cases/{id} | Tek şikâyeti getirir     |
 
 ## Yol haritası
-- [ ] PostgreSQL ile kalıcı kayıt
+- [x] PostgreSQL ile kalıcı kayıt
 - [ ] Kullanıcı girişi (JWT)
 - [ ] Belge yükleme
 - [ ] Testler
